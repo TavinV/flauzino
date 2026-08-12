@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  /* iOS infla o corpo de texto ao girar o aparelho para paisagem; 100%
+     mantém a escala que a página definiu. Sem efeito no desktop. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Toque: sem o flash cinza do WebKit e sem os 300ms de espera pelo
+   duplo-toque em nada que seja clicável. O pinch-zoom da página segue
+   funcionando — manipulation só descarta o gesto de duplo-toque. */
+a,
+button,
+[role="button"],
+summary,
+label {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Thin custom scrollbar to match the clean aesthetic */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.16);
+  color: #172554;
+}
+
+@layer utilities {
+  /* Keys out the pure-white video background so the subject reads as a native
+     element. Multiply: white * canvas = canvas, while the darker subject stays. */
+  .video-key {
+    mix-blend-mode: multiply;
+    filter: contrast(1.04) saturate(1.04);
+  }
+
+  /* Faint engineering grid used behind stages and the crypto piece. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(rgba(15, 23, 42, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Soft radial spotlight, near-white with a faint brand tint. */
+  .stage-glow {
+    background:
+      radial-gradient(60% 50% at 50% 38%, rgba(37, 99, 235, 0.07) 0%, transparent 70%),
+      radial-gradient(80% 80% at 50% 60%, #ffffff 0%, #f6f7f9 100%);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Fade the edges of a horizontally-marqueeing track. */
+  .mask-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  /* Fade the top/bottom of the streaming crypto field. */
+  .mask-y {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Vertical stream used by the crypto padlock data field. */
+  .animate-marquee-y {
+    animation: marqueeY linear infinite;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Utilitários de mobile. Nenhum deles muda o desktop: as env() de   */
+  /*  safe-area valem 0px em qualquer tela sem recorte e as trilhas     */
+  /*  horizontais só existem dentro de breakpoints pequenos.            */
+  /* ---------------------------------------------------------------- */
+
+  /* Respeita o recorte da tela (notch, ilha dinâmica, barra de gestos)
+     somando o valor pedido ao inset do aparelho. */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pb-safe-4 {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+  .pb-safe-6 {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .bottom-safe-3 {
+    bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Trilha que arrasta na horizontal: sem barra visível, com inércia do
+     iOS e sem sequestrar o gesto de "voltar" do navegador na borda. */
+  .rail {
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Animated gradient hairline used for section dividers / progress beams. */
+  .beam {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(37, 99, 235, 0.6),
+      rgba(37, 99, 235, 0.05),
+      rgba(37, 99, 235, 0.6),
+      transparent
+    );
+    background-size: 200% 100%;
+  }
+}
+
+@keyframes marqueeY {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
