@@ -10,7 +10,7 @@ import {
   useSpring,
 } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
-import { EASE, Reveal, Wordmark } from "@/components/landing/primitives";
+import { CountUp, EASE, Reveal, Wordmark } from "@/components/landing/primitives";
 import { StarField } from "@/components/landing/reactbits";
 import Footer from "@/components/landing/Footer";
 import { DaliaLogo, VisageLogo } from "@/components/cases/logos";
@@ -30,7 +30,7 @@ import { whatsappHref } from "@/lib/whatsapp";
 /*  Header                                                             */
 /* ------------------------------------------------------------------ */
 
-export function CaseTopBar({ whatsappMessage }: { whatsappMessage: string }) {
+export function CaseTopBar() {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
@@ -91,19 +91,6 @@ export function CaseTopBar({ whatsappMessage }: { whatsappMessage: string }) {
               <ArrowLeft className="h-3.5 w-3.5" />
               Todos os cases
             </Link>
-            <a
-              href={whatsappHref(whatsappMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-lg px-4 py-2.5 text-[13px] font-semibold transition-all duration-200 max-lg:h-11 max-lg:py-0 ${
-                scrolled
-                  ? "bg-brand-600 text-white hover:bg-brand-700"
-                  : "bg-white text-[#0b1220] hover:bg-brand-50"
-              }`}
-            >
-              Falar com especialista
-              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </a>
           </div>
         </div>
 
@@ -171,7 +158,13 @@ export function CaseHero({
               : "pb-16 sm:pb-24 lg:pb-32"
           }`}
         >
-          <div>
+          {/* no celular a imagem entra antes do texto: h1 + parágrafo + meta
+              empilhados sem nenhum respiro visual liam como parede de texto
+              antes de qualquer imagem aparecer. A ordem no DOM não muda —
+              só a visual (order), então H1 continua sendo o primeiro
+              conteúdo real da página para leitor de tela e SEO. De 1024px
+              para cima a ordem volta a ser a original (texto à esquerda). */}
+          <div className={image ? "order-2 lg:order-1" : undefined}>
             <Reveal>
               <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
                 <div className="shrink-0">{logo}</div>
@@ -229,7 +222,7 @@ export function CaseHero({
             <Reveal
               delay={0.22}
               y={20}
-              className="relative mx-auto w-full max-w-[680px] lg:max-w-none"
+              className="relative order-1 mx-auto w-full max-w-[680px] lg:order-2 lg:max-w-none"
             >
               <div
                 aria-hidden
@@ -327,7 +320,7 @@ export function CaseMetrics({
           transition={{ duration: 0.8, ease: EASE, delay: i * 0.1 }}
         >
           <div className="font-mono text-[clamp(2.2rem,4vw,3rem)] font-semibold leading-none tracking-tight text-brand-950">
-            {m.value}
+            <MetricValue value={m.value} />
           </div>
           <p className="mt-3 max-w-[22ch] text-sm leading-snug text-slate-500 max-sm:max-w-none max-sm:text-[15px]">
             {m.desc}
@@ -335,6 +328,22 @@ export function CaseMetrics({
         </motion.div>
       ))}
     </div>
+  );
+}
+
+/* "99%+", "< 3s" viram contagem até o número com o prefixo/sufixo em volta
+   intactos; algo sem dígito (ex.: "CLT") não tem o que contar e cai direto
+   no texto estático — nunca força uma animação sem sentido. */
+function MetricValue({ value }: { value: string }) {
+  const match = value.match(/^(\D*)(\d+(?:\.\d+)?)(\D*)$/);
+  if (!match) return <>{value}</>;
+  const [, prefix, number, suffix] = match;
+  return (
+    <>
+      {prefix}
+      <CountUp to={Number(number)} />
+      {suffix}
+    </>
   );
 }
 
@@ -440,35 +449,14 @@ export function CaseShowcase({
           viewport={{ once: true, margin: "-8% 0px" }}
           transition={{ duration: 0.9, ease: EASE, delay: i * 0.1 }}
         >
-          {/* Estas capturas têm 1917px de largura. Encaixadas na coluna de
-              um celular elas saíam com 318 por 143 pixels: a interface
-              inteira — menu, tabela, indicadores — virava um chuvisco de
-              cinza e azul. A seção prometia "o produto por dentro" e não
-              mostrava nada.
-
-              Diminuir de vez não resolve, e cortar um pedaço escolhe pelo
-              leitor o que ele pode ver. Então abaixo de 640px a captura
-              mantém uma largura de leitura (880px, onde o texto da
-              interface volta a existir) dentro de uma faixa que arrasta
-              na horizontal. O degradê na borda direita é o que avisa que
-              há mais imagem do lado de fora. De 640px para cima a imagem
-              volta a caber inteira e nada disso se aplica. */}
-          <div className="relative">
-            <div className="rail overflow-hidden max-sm:overflow-x-auto">
-              <Image
-                src={it.src}
-                alt={it.alt}
-                width={it.width}
-                height={it.height}
-                sizes="(max-width: 640px) 880px, 50vw"
-                className="h-auto w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] max-sm:w-[880px] max-sm:max-w-none"
-              />
-            </div>
-            {/* fica FORA da faixa que rola, senão o degradê passearia
-                junto com a imagem em vez de marcar a borda */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-white/85 to-transparent sm:hidden"
+          <div className="relative overflow-hidden">
+            <Image
+              src={it.src}
+              alt={it.alt}
+              width={it.width}
+              height={it.height}
+              sizes="(max-width: 640px) 100vw, 50vw"
+              className="h-auto w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
             />
           </div>
           <figcaption className="border-t border-slate-100 px-5 py-4 text-sm font-medium text-slate-600 sm:px-6">
@@ -797,16 +785,10 @@ export function CaseCta({
   );
 }
 
-export function CaseShell({
-  children,
-  whatsappMessage = "Olá! Estou vendo um case no site da Flauzino e quero uma solução parecida para o meu negócio.",
-}: {
-  children: ReactNode;
-  whatsappMessage?: string;
-}) {
+export function CaseShell({ children }: { children: ReactNode }) {
   return (
     <main className="relative overflow-x-clip bg-white">
-      <CaseTopBar whatsappMessage={whatsappMessage} />
+      <CaseTopBar />
       {children}
       <Footer />
     </main>

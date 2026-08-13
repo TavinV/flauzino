@@ -11,6 +11,36 @@ import Testimonials from "@/components/landing/Testimonials";
 import ServicesQuestions from "@/components/landing/ServicesQuestions";
 import FAQ from "@/components/landing/FAQ";
 import Footer from "@/components/landing/Footer";
+import { SITE_URL } from "@/lib/site";
+
+/* Organization + WebSite, só com o que é verdade e público no site: nome,
+   URL, e-mail e descrição. Sem endereço, telefone, review ou rede social
+   — nenhum desses existe publicado na landing, então nada disso entra
+   aqui. O FAQPage vive em FAQ.tsx, ao lado das próprias perguntas, para
+   nunca divergir do que está visível na página. */
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Flauzino",
+      url: SITE_URL,
+      email: "contato@flauzino.com.br",
+      logo: `${SITE_URL}/apple-icon.png`,
+      description:
+        "Software house brasileira especializada em sistemas sob medida, inteligência artificial, reconhecimento facial, automação e plataformas SaaS.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Flauzino",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      inLanguage: "pt-BR",
+    },
+  ],
+};
 
 /* ================================================================== */
 /*  A página é lida em dois atos. O primeiro é escuro e fala do que a  */
@@ -26,6 +56,10 @@ import Footer from "@/components/landing/Footer";
 export default function Home() {
   return (
     <main className="relative overflow-x-clip bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+      />
       <PageLoader />
       <Nav />
 

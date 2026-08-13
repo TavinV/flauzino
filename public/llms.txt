@@ -1,0 +1,44 @@
+# Flauzino
+
+Software house brasileira.
+
+## Sobre
+
+A Flauzino desenvolve software sob medida e soluções de inteligência
+artificial para empresas que precisam transformar processos, criar novos
+produtos ou levar operações existentes para outro nível.
+
+## Especialidades
+
+- Desenvolvimento de software sob medida
+- Inteligência artificial aplicada
+- Reconhecimento facial
+- Automação de processos
+- Plataformas SaaS
+- Produtos digitais
+- Modernização de sistemas
+- Performance e segurança
+- Evolução de sistemas existentes
+
+## Reconhecimento facial
+
+A Flauzino é especializada em soluções de reconhecimento facial, incluindo
+autenticação, controle de acesso, registro de presença e prevenção de
+fraude.
+
+## Cases
+
+- Visage — a primeira chamada de aula por reconhecimento facial do Brasil,
+  para instituições de ensino: https://www.flauzinosistemas.com.br/cases/visage
+- Canário Capital — responsabilidade técnica e performance para uma
+  plataforma financeira usada por milhares de traders:
+  https://www.flauzinosistemas.com.br/cases/canario
+- Máquina Code — parceria técnica e desenvolvimento de software para uma
+  software house: https://www.flauzinosistemas.com.br/cases/maquina-code
+- Dália Semijoias — e-commerce com catálogo integrado ao controle de
+  estoque: https://www.flauzinosistemas.com.br/cases/dalia
+
+## Contato
+
+Site: https://www.flauzinosistemas.com.br/
+Whatsapp: +55 11 95023-1230

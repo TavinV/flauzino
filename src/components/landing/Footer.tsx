@@ -52,7 +52,7 @@ export default function Footer() {
 
       <div className="relative mx-auto max-w-9xl px-5 lg:px-8">
         {/* último convite */}
-        <div className="grid gap-8 border-b border-white/10 py-14 sm:gap-10 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:py-24">
+        <div className="grid gap-8 border-b border-white/10 py-16 sm:gap-10 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:py-24">
           <h2 className="max-w-2xl text-balance text-[clamp(1.85rem,3.8vw,3rem)] font-semibold leading-[1.08] tracking-tightest text-white">
             Conte o problema. A gente diz como consegue resolver.
           </h2>
@@ -69,7 +69,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <div className="grid gap-10 py-12 sm:gap-12 sm:py-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 py-14 sm:gap-12 sm:py-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div className="max-w-xs">
             <Wordmark className="!text-white" />
             <p className="mt-5 text-sm leading-relaxed text-white/50 max-sm:text-[15px]">

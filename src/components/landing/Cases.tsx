@@ -297,7 +297,7 @@ export default function Cases() {
     <section
       id="cases"
       data-nav-theme="light"
-      className="relative scroll-mt-24 border-t border-slate-200/70 bg-canvas py-20 sm:py-28 lg:py-40"
+      className="relative scroll-mt-24 border-t border-slate-200/70 bg-canvas py-24 sm:py-28 lg:py-40"
     >
       <div className="mx-auto max-w-9xl px-5 lg:px-8">
         <div className="max-w-2xl">

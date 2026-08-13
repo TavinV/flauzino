@@ -13,10 +13,29 @@ import {
 } from "@/components/cases/chrome";
 import { VisageLogo } from "@/components/cases/logos";
 
+const TITLE = "Visage | Reconhecimento facial para chamada de aula | Flauzino";
+const DESCRIPTION =
+  "Como a Flauzino transformou qualquer celular, tablet ou notebook em um totem de reconhecimento facial para chamada de aula, com detecção de fraude e conformidade com a LGPD.";
+
 export const metadata: Metadata = {
-  title: "Visage, a primeira chamada de aula por reconhecimento facial do Brasil | Flauzino",
-  description:
-    "Como a Flauzino transformou qualquer celular, tablet ou notebook em um totem inteligente de reconhecimento facial para instituições de ensino, com detecção de fraudes e conformidade com a LGPD.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: {
+    canonical: "/cases/visage",
+  },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/cases/visage",
+    siteName: "Flauzino",
+    type: "website",
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 const TRADITIONAL = [
@@ -75,7 +94,7 @@ const SCREENS = [
 
 export default function VisageCasePage() {
   return (
-    <CaseShell whatsappMessage="Olá! Estou vendo o case da Visage no site da Flauzino e quero uma solução de reconhecimento facial parecida para minha instituição.">
+    <CaseShell>
       <CaseHero
         logo={<VisageLogo className="text-2xl text-white" mark={40} />}
         title="A primeira chamada de aula por reconhecimento facial do Brasil."

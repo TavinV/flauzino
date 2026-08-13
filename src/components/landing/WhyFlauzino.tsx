@@ -104,10 +104,10 @@ export default function WhyFlauzino() {
     <section
       id="por-que-a-flauzino"
       data-nav-theme="light"
-      className="relative scroll-mt-24 overflow-hidden bg-white py-20 sm:py-28 lg:py-40"
+      className="relative scroll-mt-24 overflow-hidden bg-white py-24 sm:py-28 lg:py-40"
     >
       <div className="relative mx-auto max-w-9xl px-5 lg:px-8">
-        <div className="grid gap-10 sm:gap-14 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] lg:gap-24">
+        <div className="grid gap-12 sm:gap-14 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] lg:gap-24">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <motion.div style={{ y: headlineY }}>
               <motion.h2
@@ -133,7 +133,7 @@ export default function WhyFlauzino() {
 
               {/* o único número que temos de verdade, tratado como assinatura */}
               <motion.div
-                className="mt-8 flex items-center gap-5 border-t border-slate-200 pt-7 sm:mt-10 sm:pt-8"
+                className="mt-9 flex items-center gap-5 border-t border-slate-200 pt-7 sm:mt-10 sm:pt-8"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10% 0px" }}

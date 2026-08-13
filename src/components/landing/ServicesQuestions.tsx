@@ -43,7 +43,7 @@ export default function ServicesQuestions() {
     <section
       id="servicos"
       data-nav-theme="light"
-      className="relative scroll-mt-24 border-t border-slate-200/70 bg-canvas py-20 sm:py-28 lg:py-36"
+      className="relative scroll-mt-24 border-t border-slate-200/70 bg-canvas py-24 sm:py-28 lg:py-36"
     >
       <div className="mx-auto max-w-9xl px-5 lg:px-8">
         <Reveal>
@@ -52,7 +52,7 @@ export default function ServicesQuestions() {
           </h2>
         </Reveal>
 
-        <div className="mt-10 border-t border-slate-200 sm:mt-14">
+        <div className="mt-12 border-t border-slate-200 sm:mt-14">
           {SITUATIONS.map((item, i) => (
             <motion.div
               key={item.q}
@@ -79,7 +79,7 @@ export default function ServicesQuestions() {
         </div>
 
         <Reveal delay={0.1}>
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 sm:mt-14">
+          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 sm:mt-14">
             <a
               href={whatsappHref(
                 "Olá! Vi a seção \"Qual é o seu caso\" no site da Flauzino. Meu caso não estava na lista, quero contar a minha situação.",

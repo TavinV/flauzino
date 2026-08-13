@@ -142,7 +142,7 @@ export default function Testimonials() {
     <section
       id="depoimentos"
       data-nav-theme="light"
-      className="relative scroll-mt-24 border-t border-slate-200/70 bg-white py-20 sm:py-28 lg:py-36"
+      className="relative scroll-mt-24 border-t border-slate-200/70 bg-white py-24 sm:py-28 lg:py-36"
     >
       <div className="mx-auto max-w-9xl px-5 lg:px-8">
         <div className="max-w-2xl">
@@ -156,7 +156,7 @@ export default function Testimonials() {
           </Reveal>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:mt-16 sm:gap-5 lg:grid-cols-2">
+        <div className="mt-12 grid gap-4 sm:mt-16 sm:gap-5 lg:grid-cols-2">
           {TESTIMONIALS.map((item, i) => (
             <TestimonialCard key={item.name} item={item} index={i} />
           ))}

@@ -124,8 +124,11 @@ export default function Hero() {
         />
 
         {/* ------------------------------ conteúdo ------------------------------ */}
-        <div className="relative z-10 mx-auto flex w-full max-w-[88rem] flex-1 flex-col justify-center px-5 pb-6 pt-[5.25rem] sm:px-8 sm:pb-10 sm:pt-24 lg:px-10 lg:pb-6 lg:pt-28">
-          <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-[minmax(0,46%)_minmax(0,54%)] lg:gap-6">
+        <div className="relative z-10 mx-auto flex w-full max-w-[88rem] flex-1 flex-col justify-center px-6 pb-7 pt-[5.25rem] sm:px-8 sm:pb-10 sm:pt-24 lg:px-10 lg:pb-6 lg:pt-28">
+          {/* gap subiu de 24 para 32px: no celular o par texto+CTA e o
+              palco respirando embaixo ficavam colados um no outro. De
+              640px pra cima quem decide continua sendo o sm:gap-10. */}
+          <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,46%)_minmax(0,54%)] lg:gap-6">
             {/* texto — centralizado no mobile, alinhado à esquerda no desktop */}
             <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
               <Reveal delay={0.05}>
@@ -152,7 +155,7 @@ export default function Hero() {
               </Reveal>
 
               <Reveal delay={0.1}>
-                <p className="mx-auto mt-4 max-w-xl text-balance text-[15px] leading-relaxed text-white/70 sm:mt-6 sm:text-[17px] lg:mx-0">
+                <p className="mx-auto mt-5 max-w-xl text-balance text-[15px] leading-relaxed text-white/70 sm:mt-6 sm:text-[17px] lg:mx-0">
                   Desenvolvemos soluções de reconhecimento facial, inteligência
                   artificial, sistemas sob medida, plataformas SaaS e qualquer
                   tecnologia para o seu negócio.
@@ -163,7 +166,7 @@ export default function Hero() {
                 {/* os dois CTAs dividem a mesma altura (h-13) e, no mobile,
                     empilham ocupando a largura toda — assim ficam com
                     exatamente a mesma caixa um do outro */}
-                <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start">
+                <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start">
                   <a
                     href={whatsappHref(
                       "Olá! Vi o site da Flauzino e tenho interesse em reconhecimento facial e soluções de inteligência artificial para minha empresa. Podemos conversar?",

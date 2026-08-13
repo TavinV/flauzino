@@ -91,6 +91,22 @@ function FAQItem({
   );
 }
 
+/* FAQPage a partir das mesmas QUESTIONS renderizadas acima — nunca gera
+   schema para pergunta sem resposta visível, porque lê do mesmo array
+   que o acordeão usa. */
+const FAQ_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: QUESTIONS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
+
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -98,10 +114,14 @@ export default function FAQ() {
     <section
       id="faq"
       data-nav-theme="light"
-      className="relative scroll-mt-24 border-t border-slate-200/70 bg-white py-20 sm:py-28 lg:py-36"
+      className="relative scroll-mt-24 border-t border-slate-200/70 bg-white py-24 sm:py-28 lg:py-36"
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
+      />
       <div className="mx-auto max-w-9xl px-5 lg:px-8">
-        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[minmax(0,34%)_minmax(0,1fr)] lg:gap-20">
+        <div className="grid gap-9 sm:gap-12 lg:grid-cols-[minmax(0,34%)_minmax(0,1fr)] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
               <h2 className="text-balance text-[clamp(1.85rem,3.4vw,2.6rem)] font-semibold leading-[1.1] tracking-tightest text-brand-950">

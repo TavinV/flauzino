@@ -116,8 +116,16 @@ label {
   }
 
   /* Trilha que arrasta na horizontal: sem barra visível, com inércia do
-     iOS e sem sequestrar o gesto de "voltar" do navegador na borda. */
+     iOS e sem sequestrar o gesto de "voltar" do navegador na borda.
+     overflow-y precisa ser explicitamente hidden — do contrário o
+     próprio CSS trata o "visible" implícito como "auto" (spec do
+     overflow) só porque o eixo x já é scrollável, e a trilha ganha um
+     scroll vertical fantasma. Esse scroll fantasma é o que deixava o
+     primeiro ou o último cartão cortado ao arrastar: o gesto de
+     arrastar para o lado também arrastava um pouco na vertical, sem
+     nenhum snap para trazer de volta a 0. */
   .rail {
+    overflow-y: hidden;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;

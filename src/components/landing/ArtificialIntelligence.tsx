@@ -134,7 +134,7 @@ export default function ArtificialIntelligence() {
          cima e embaixo do texto, e o shader mais caro da página rodava
          sobre 40% a mais de pixels. Aqui o painel vale uma tela (svh, sem
          o pulo da barra do Safari) e cresce com o conteúdo se precisar. */
-      className="relative isolate flex min-h-[100svh] scroll-mt-24 items-center overflow-hidden bg-[#04070f] py-20 sm:min-h-[140dvh] sm:py-24"
+      className="relative isolate flex min-h-[100svh] scroll-mt-24 items-center overflow-hidden bg-[#04070f] py-24 sm:min-h-[140dvh] sm:py-24"
     >
       {/* o y e o scale continuam presos ao scroll, então o prisma não
           "acende": ele sobe e assenta enquanto a seção entra */}
@@ -193,7 +193,7 @@ export default function ArtificialIntelligence() {
         </h2>
 
         <motion.p
-          className="mx-auto mt-5 max-w-2xl text-balance text-[15px] leading-relaxed text-white/70 sm:mt-7 sm:text-[17px]"
+          className="mx-auto mt-6 max-w-2xl text-balance text-[15px] leading-relaxed text-white/70 sm:mt-7 sm:text-[17px]"
           initial={{ opacity: 0, y: 22, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-12% 0px" }}
@@ -228,7 +228,7 @@ export default function ArtificialIntelligence() {
             capacidade vira uma linha de leitura — ícone à esquerda,
             título e frase à direita — na metade da altura. A troca é
             só de grid para flex: a ordem dos nós no DOM não muda. */}
-        <div className="mt-12 grid gap-x-8 gap-y-7 sm:mt-16 sm:grid-cols-2 sm:gap-y-11 lg:mt-20 lg:grid-cols-4">
+        <div className="mt-14 grid gap-x-8 gap-y-7 sm:mt-16 sm:grid-cols-2 sm:gap-y-11 lg:mt-20 lg:grid-cols-4">
           {CAPABILITIES.map((c, i) => {
             const Icon = c.icon;
             return (

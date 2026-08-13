@@ -13,10 +13,29 @@ import {
 } from "@/components/cases/chrome";
 import { MAQUINA_BLUE } from "@/components/cases/logos";
 
+const TITLE = "Máquina Code | Parceria técnica e desenvolvimento de software | Flauzino";
+const DESCRIPTION =
+  "Como a Flauzino atuou como parceira técnica da Máquina Code, elevando a previsibilidade das entregas e revertendo um contrato que caminhava para a não renovação.";
+
 export const metadata: Metadata = {
-  title: "Máquina Code, parceria técnica que renovou um contrato estratégico | Flauzino",
-  description:
-    "Como a Flauzino atuou como parceira técnica da Máquina Code em projetos estratégicos, elevando a previsibilidade das entregas e revertendo um contrato que caminhava para a não renovação.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: {
+    canonical: "/cases/maquina-code",
+  },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/cases/maquina-code",
+    siteName: "Flauzino",
+    type: "website",
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 const BEFORE = [
@@ -55,7 +74,7 @@ const PROCESS = [
    inventar mockup, o peso vem da tipografia e do painel de destaque. */
 export default function MaquinaCodeCasePage() {
   return (
-    <CaseShell whatsappMessage="Olá! Estou vendo o case da Máquina Code no site da Flauzino e quero um time técnico parceiro para o meu projeto.">
+    <CaseShell>
       <CaseHero
         logo={
           <span className="inline-flex rounded-lg bg-white px-3.5 py-2.5">

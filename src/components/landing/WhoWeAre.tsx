@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 import {
   AppWindow,
   ArrowRight,
+  BarChart3,
   BrainCircuit,
   Gauge,
   PencilRuler,
+  Plug,
   ScanFace,
+  ShieldCheck,
 } from "lucide-react";
 import { useCallback, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { EASE, Reveal } from "./primitives";
@@ -58,6 +61,21 @@ const BUILDS = [
     icon: Gauge,
     title: "Evolução de sistemas",
     body: "Modernização, performance e segurança no que já está no ar.",
+  },
+  {
+    icon: Plug,
+    title: "Integrações e APIs",
+    body: "Sistemas que hoje não se falam passam a trocar dado sem retrabalho manual.",
+  },
+  {
+    icon: BarChart3,
+    title: "Dados e BI",
+    body: "Dashboards e indicadores que a operação usa para decidir, não só para olhar.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Segurança e LGPD",
+    body: "Controle de acesso, dados protegidos e conformidade desde a arquitetura.",
   },
 ];
 
@@ -227,7 +245,7 @@ export default function WhoWeAre() {
         </div>
 
         {/* ---------------------------- a trilha ---------------------------- */}
-        <div className="mt-16 flex items-end justify-between gap-6 sm:mt-28">
+        <div className="mt-20 flex items-end justify-between gap-6 sm:mt-28">
           <Reveal>
             <h3 className="text-[11px] font-semibold uppercase tracking-eyebrow text-slate-600">
               O que construímos

@@ -26,10 +26,29 @@ import {
 import { FLAUZINO_BLUE } from "@/components/cases/logos";
 import { Reveal } from "@/components/landing/primitives";
 
+const TITLE = "Canário Capital | Engenharia de software e performance | Flauzino";
+const DESCRIPTION =
+  "Como a Flauzino assumiu a responsabilidade técnica da Canário Capital, plataforma financeira de milhares de traders, com rotinas críticas até 51 vezes mais rápidas.";
+
 export const metadata: Metadata = {
-  title: "Canário Capital, tecnologia para uma das maiores mesas proprietárias do Brasil | Flauzino",
-  description:
-    "Como a Flauzino assumiu a responsabilidade técnica da Canário Capital, plataforma financeira usada diariamente por milhares de traders, acelerando funcionalidades críticas sem comprometer a estabilidade.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: {
+    canonical: "/cases/canario",
+  },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/cases/canario",
+    siteName: "Flauzino",
+    type: "website",
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 const BEFORE = [
@@ -122,7 +141,7 @@ const INTEGRATIONS = [
 
 export default function CanarioCasePage() {
   return (
-    <CaseShell whatsappMessage="Olá! Estou vendo o case da Canário Capital no site da Flauzino e quero uma solução de tecnologia parecida para minha operação.">
+    <CaseShell>
       <CaseHero
         logo={
           <Image

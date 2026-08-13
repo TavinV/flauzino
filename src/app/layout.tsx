@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 /* Fontes self-hosted (src/fonts/*.woff2, subset latin) — sem dependência
@@ -52,26 +53,37 @@ const bodoni = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://flauzino.com.br"),
-  title: "Flauzino — Software house de soluções individualizadas em IA",
+  metadataBase: new URL(SITE_URL),
+  title: "Flauzino | Software sob medida, IA e reconhecimento facial",
   description:
-    "A Flauzino projeta sistemas de software e inteligência artificial sob medida para cada negócio. Reconhecimento facial é o nosso maior case de sucesso: antifraude avançado, criptografia de ponta a ponta e conformidade total com a LGPD.",
+    "Software house brasileira especializada em sistemas sob medida, inteligência artificial, reconhecimento facial, automação e plataformas SaaS.",
   keywords: [
     "software house",
-    "soluções sob medida",
+    "software sob medida",
+    "desenvolvimento de sistemas",
     "inteligência artificial",
     "reconhecimento facial",
-    "antifraude",
-    "machine learning",
-    "criptografia",
-    "LGPD",
+    "automação de processos",
+    "plataformas SaaS",
+    "modernização de sistemas",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Flauzino — Software house de soluções individualizadas em IA",
+    title: "Flauzino | Software sob medida, IA e reconhecimento facial",
     description:
-      "Sistemas de software e inteligência artificial sob medida para cada negócio. Reconhecimento facial é o nosso maior case de sucesso.",
+      "Software house brasileira especializada em sistemas sob medida, inteligência artificial, reconhecimento facial, automação e plataformas SaaS.",
+    url: "/",
+    siteName: "Flauzino",
     type: "website",
     locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flauzino | Software sob medida, IA e reconhecimento facial",
+    description:
+      "Software house brasileira especializada em sistemas sob medida, inteligência artificial, reconhecimento facial, automação e plataformas SaaS.",
   },
 };
 

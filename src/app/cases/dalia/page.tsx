@@ -11,10 +11,29 @@ import {
 } from "@/components/cases/chrome";
 import { DaliaLogo } from "@/components/cases/logos";
 
+const TITLE = "Dália Semijoias | Catálogo digital e integração de estoque | Flauzino";
+const DESCRIPTION =
+  "Como a Flauzino desenvolveu o e-commerce da Dália Semijoias: vendas integradas ao controle de estoque, gestão simplificada e experiência de compra pensada para converter.";
+
 export const metadata: Metadata = {
-  title: "Dália Semijoias, vitrine e estoque na mesma operação | Flauzino",
-  description:
-    "Como a Flauzino desenvolveu o e-commerce da Dália Semijoias: vendas online integradas ao controle de estoque, gestão de produtos simplificada e uma experiência de compra pensada para converter.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: {
+    canonical: "/cases/dalia",
+  },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/cases/dalia",
+    siteName: "Flauzino",
+    type: "website",
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 const OPERATION = [
@@ -38,7 +57,7 @@ const OPERATION = [
 
 export default function DaliaCasePage() {
   return (
-    <CaseShell whatsappMessage="Olá! Estou vendo o case da Dália Semijoias no site da Flauzino e quero uma loja online parecida para o meu negócio.">
+    <CaseShell>
       <CaseHero
         logo={<DaliaLogo className="text-[26px]" color="#F3EDE2" />}
         title="Vitrine e estoque passaram a viver na mesma operação."

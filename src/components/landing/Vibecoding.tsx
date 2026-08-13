@@ -583,9 +583,9 @@ function LayerList() {
 
 export default function Vibecoding() {
   return (
-    <section data-nav-theme="light" className="relative bg-white py-20 sm:py-28 lg:py-40">
+    <section data-nav-theme="light" className="relative bg-white py-24 sm:py-28 lg:py-40">
       <div className="mx-auto max-w-9xl px-5 lg:px-8">
-        <div className="grid items-center gap-10 sm:gap-16 lg:grid-cols-[minmax(0,46%)_minmax(0,1fr)] lg:gap-20">
+        <div className="grid items-center gap-12 sm:gap-16 lg:grid-cols-[minmax(0,46%)_minmax(0,1fr)] lg:gap-20">
           <div>
             <Reveal>
               <h2 className="text-balance text-[clamp(2rem,4.2vw,3.25rem)] font-semibold leading-[1.08] tracking-tightest">
@@ -599,7 +599,7 @@ export default function Vibecoding() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <p className="mt-5 max-w-[58ch] text-[15px] leading-relaxed text-slate-600 sm:mt-7 sm:text-[17px]">
+              <p className="mt-6 max-w-[58ch] text-[15px] leading-relaxed text-slate-600 sm:mt-7 sm:text-[17px]">
                 Hoje, qualquer pessoa consegue colocar um sistema no ar. O desafio começa quando ele precisa escalar, 
                 permanecer seguro e continuar funcionando. Nesse cenário, ajudamos seu sistema feito por I.A a crescer 
                 junto com seu negócio.
@@ -635,7 +635,7 @@ export default function Vibecoding() {
         </div>
 
         {/* blindagem: o serviço que nasce dessa tese */}
-        <Reveal delay={0.1} className="mt-16 sm:mt-24 lg:mt-32">
+        <Reveal delay={0.1} className="mt-20 sm:mt-24 lg:mt-32">
           <div className="relative overflow-hidden rounded-3xl bg-flauzino-navy-900 p-7 sm:p-12 lg:p-16">
             <div
               aria-hidden
