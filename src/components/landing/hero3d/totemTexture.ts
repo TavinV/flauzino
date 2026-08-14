@@ -164,7 +164,16 @@ export function createTotemTexture(): { texture: THREE.CanvasTexture; dispose: (
   const texture = new THREE.CanvasTexture(canvas);
   texture.flipY = false;
   texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = 8;
+  /* canvas é 1000×1450 (não é potência de 2) e é redesenhado a cada 1s
+     via needsUpdate — mipmap + anisotropia em cima de uma textura NPOT
+     atualizada com frequência é onde a GPU de alguns Android embaralha
+     mip levels antigos e novos: a tela do totem aparece com relógio e
+     texto sobrepostos/rasgados, só naquele aparelho. A tela é vista quase
+     de frente e nunca encolhe na distância, então mipmap não fazia falta
+     nenhuma — LinearFilter sem mip elimina a classe inteira do bug. */
+  texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
 
   let logo: HTMLImageElement | null = null;
   const img = new Image();
