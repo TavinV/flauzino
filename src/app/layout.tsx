@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
+import { GoogleTagManager } from '@next/third-parties/google'
+
 /* Fontes self-hosted (src/fonts/*.woff2, subset latin) — sem dependência
    do Google Fonts em build ou runtime. Antes, qualquer falha de rede no
    next/font/google derrubava as variáveis --font-* e o site inteiro caía
@@ -97,6 +99,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${poppins.variable} ${mono.variable} ${monoDs.variable} ${bodoni.variable}`}
     >
+      <GoogleAnalytics gaId="G-YKN10ZWBJ1" />
       <body className="bg-white font-sans antialiased dark:bg-flauzino-navy-950">
         {children}
       </body>

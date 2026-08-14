@@ -56,6 +56,7 @@ const ORGANIZATION_JSON_LD = {
 export default function Home() {
   return (
     <main className="relative overflow-x-clip bg-white">
+  
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
