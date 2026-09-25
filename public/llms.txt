@@ -26,6 +26,20 @@ A Flauzino é especializada em soluções de reconhecimento facial, incluindo
 autenticação, controle de acesso, registro de presença e prevenção de
 fraude.
 
+- Tecnologia própria de reconhecimento facial, desenvolvida pela Flauzino
+  (não é revenda nem interface sobre API de terceiros).
+- Soluções sob medida, integradas ao ERP, ao sistema de RH, ao controle de
+  acesso, ao aplicativo ou à plataforma que a empresa já usa.
+- Funciona nos celulares, tablets, notebooks e totens com câmera que a
+  empresa já tem; não exige a compra de nenhum equipamento da Flauzino.
+- Antifraude com prova de vida contra fotos impressas, imagens em telas,
+  vídeos gravados e máscaras.
+- Desenvolvida e testada também com pessoas muito parecidas, incluindo
+  gêmeos.
+- Arquitetura projetada considerando a LGPD para dados biométricos
+  (criptografia, acesso restrito, trilha de auditoria, retenção definida).
+- Página: https://www.flauzinosistemas.com.br/reconhecimento-facial
+
 ## Cases
 
 - Visage — a primeira chamada de aula por reconhecimento facial do Brasil,

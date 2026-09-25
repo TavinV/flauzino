@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 /* Fontes self-hosted (src/fonts/*.woff2, subset latin) — sem dependência
    do Google Fonts em build ou runtime. Antes, qualquer falha de rede no

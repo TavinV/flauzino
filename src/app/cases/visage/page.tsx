@@ -39,15 +39,15 @@ export const metadata: Metadata = {
 };
 
 const TRADITIONAL = [
-  "Câmeras dedicadas e totens proprietários",
-  "Contrato preso ao hardware do fornecedor",
+  "Câmeras e totens vendidos pelo próprio fornecedor",
+  "Contrato preso ao equipamento do fornecedor",
   "Instalação complexa e demorada",
   "Investimento inicial alto em equipamento",
 ];
 
 const VISAGE_WAY = [
   "Roda no celular, tablet ou notebook que a instituição já tem",
-  "Nenhum equipamento proprietário",
+  "Nenhum equipamento nosso para comprar",
   "Implantação em poucas horas",
   "Sem dependência do fornecedor para crescer",
 ];
@@ -112,10 +112,10 @@ export default function VisageCasePage() {
 
       {/* infraestrutura */}
       <CaseSection>
-        <CaseStatement title="Reconhecimento facial sem equipamento proprietário.">
+        <CaseStatement title="Reconhecimento facial com os aparelhos que a instituição já tem.">
           <p>
-            As soluções tradicionais exigem câmera dedicada, totem próprio e
-            contrato amarrado ao hardware. A Visage foi por outro caminho:
+            As soluções tradicionais exigem câmera dedicada, totem do fornecedor e
+            um contrato preso a esse equipamento. A Visage foi por outro caminho:
             qualquer celular, tablet ou notebook da instituição vira um totem
             inteligente, sem instalação complexa nem compra de dispositivo.
           </p>

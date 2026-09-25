@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { EASE, Reveal } from "./primitives";
@@ -11,7 +11,9 @@ import { EASE, Reveal } from "./primitives";
 /*  o desenho de linhas cheias usado logo acima, em Situações.         */
 /* ================================================================== */
 
-const QUESTIONS = [
+export type FAQEntry = { q: string; a: string };
+
+const QUESTIONS: FAQEntry[] = [
   {
     q: "A Flauzino só faz reconhecimento facial?",
     a: "Não. É o nosso case mais conhecido, mas a maior parte do que entregamos são plataformas sob medida, automação de processo e IA aplicada a outros problemas de negócio.",
@@ -91,60 +93,79 @@ function FAQItem({
   );
 }
 
-/* FAQPage a partir das mesmas QUESTIONS renderizadas acima — nunca gera
-   schema para pergunta sem resposta visível, porque lê do mesmo array
-   que o acordeão usa. */
-const FAQ_JSON_LD = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: QUESTIONS.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.a,
-    },
-  })),
-};
+/* FAQPage a partir das mesmas perguntas renderizadas no acordeão — nunca
+   gera schema para pergunta sem resposta visível, porque lê do mesmo
+   array que o acordeão usa. */
+function faqJsonLd(questions: FAQEntry[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
+}
 
-export default function FAQ() {
+const DEFAULT_INTRO = (
+  <>
+    Ficou alguma dúvida de fora? Escreva para{" "}
+    <a
+      href="mailto:contato@flauzino.com.br"
+      className="font-medium text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:decoration-brand-500"
+    >
+      contato@flauzino.com.br
+    </a>
+    .
+  </>
+);
+
+/* Sem props, é o FAQ da home. Páginas internas (ex.: /reconhecimento-facial)
+   passam as próprias perguntas e o próprio título, e herdam o acordeão e
+   o FAQPage sem duplicar nada. */
+export default function FAQ({
+  questions = QUESTIONS,
+  title = "Antes de falar com a gente.",
+  intro = DEFAULT_INTRO,
+  id = "faq",
+}: {
+  questions?: FAQEntry[];
+  title?: string;
+  intro?: ReactNode;
+  id?: string;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section
-      id="faq"
+      id={id}
       data-nav-theme="light"
       className="relative scroll-mt-24 border-t border-slate-200/70 bg-white py-24 sm:py-28 lg:py-36"
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(questions)) }}
       />
       <div className="mx-auto max-w-9xl px-5 lg:px-8">
         <div className="grid gap-9 sm:gap-12 lg:grid-cols-[minmax(0,34%)_minmax(0,1fr)] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
               <h2 className="text-balance text-[clamp(1.85rem,3.4vw,2.6rem)] font-semibold leading-[1.1] tracking-tightest text-brand-950">
-                Antes de falar com a gente.
+                {title}
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-slate-500">
-                Ficou alguma dúvida de fora? Escreva para{" "}
-                <a
-                  href="mailto:contato@flauzino.com.br"
-                  className="font-medium text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:decoration-brand-500"
-                >
-                  contato@flauzino.com.br
-                </a>
-                .
-              </p>
+              <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-slate-500">{intro}</p>
             </Reveal>
           </div>
 
           <Reveal delay={0.06}>
             <div className="border-t border-slate-200">
-              {QUESTIONS.map((item, i) => (
+              {questions.map((item, i) => (
                 <FAQItem
                   key={item.q}
                   q={item.q}

@@ -72,7 +72,7 @@ const CASES: CaseItem[] = [
     client: "Visage",
     sector: "Educação",
     result:
-      "A primeira chamada de aula por reconhecimento facial do Brasil, sem hardware proprietário.",
+      "A primeira chamada de aula por reconhecimento facial do Brasil.",
     image: { src: "/cases/visage/hero.png", alt: "Painel do Visage em operação" },
     logo: <VisageLogo className="text-xl text-white" mark={26} />,
   },

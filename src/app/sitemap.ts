@@ -10,6 +10,7 @@ const ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[number]["ch
   // "https://.../" → "https://..." (trailingSlash:false é o padrão do
   // next.config.mjs), e o sitemap precisa bater com essa mesma URL.
   { path: "", changeFrequency: "weekly", priority: 1 },
+  { path: "/reconhecimento-facial", changeFrequency: "monthly", priority: 0.9 },
   { path: "/cases/visage", changeFrequency: "monthly", priority: 0.8 },
   { path: "/cases/canario", changeFrequency: "monthly", priority: 0.8 },
   { path: "/cases/maquina-code", changeFrequency: "monthly", priority: 0.8 },

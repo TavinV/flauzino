@@ -79,12 +79,20 @@ export default function Nav() {
     const visible = new Set<HTMLElement>();
     let io: IntersectionObserver | null = null;
 
+    /* a comparação usa a posição na tela, e não offsetTop: uma seção
+       pode ter faixas próprias aninhadas (a de reconhecimento facial
+       tem), e o offsetTop delas é relativo à seção, não à página. No
+       empate de topo vence a faixa mais baixa em altura — a mais
+       específica, que está dentro da outra. */
     const pick = () => {
       let winner: DOMStringMap | undefined;
-      let lowest = -1;
+      let lowest = -Infinity;
+      let smallest = Infinity;
       visible.forEach((s) => {
-        if (s.offsetTop > lowest) {
-          lowest = s.offsetTop;
+        const { top, height } = s.getBoundingClientRect();
+        if (top > lowest || (top === lowest && height < smallest)) {
+          lowest = top;
+          smallest = height;
           winner = s.dataset;
         }
       });
@@ -138,7 +146,11 @@ export default function Nav() {
      página e volta a sumir dentro das seções bare: nelas o header abre
      de novo para 88rem e os links se afastam, exatamente como na hera. */
   const glass = scrolled && !bareSection;
-  const dark = onDark || !glass;
+  /* sem vidro, a cor segue o tema da faixa quando ela pede o header
+     aberto: texto branco sobre o painel de IA, texto escuro sobre a
+     parte clara do reconhecimento facial. No topo da página continua
+     branco sobre a hero, como sempre foi. */
+  const dark = glass || bareSection ? onDark : true;
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-4 sm:pt-4">

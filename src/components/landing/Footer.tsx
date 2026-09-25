@@ -53,7 +53,9 @@ export default function Footer() {
       <div className="relative mx-auto max-w-9xl px-5 lg:px-8">
         {/* último convite */}
         <div className="grid gap-8 border-b border-white/10 py-16 sm:gap-10 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:py-24">
-          <h2 className="max-w-2xl text-balance text-[clamp(1.85rem,3.8vw,3rem)] font-semibold leading-[1.08] tracking-tightest text-white">
+          {/* no celular o tamanho acompanha a largura (6,2vw): com o piso fixo
+              de 1,85rem a frase quebrava em três linhas até em 414px */}
+          <h2 className="max-w-2xl text-balance text-[clamp(1.85rem,3.8vw,3rem)] font-semibold leading-[1.08] tracking-tightest text-white max-sm:text-[clamp(1.2rem,6.2vw,1.6rem)]">
             Conte o problema. A gente diz como consegue resolver.
           </h2>
           <a

@@ -9,7 +9,7 @@ import {
   useScroll,
   useSpring,
 } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronDown, X } from "lucide-react";
 import { CountUp, EASE, Reveal, Wordmark } from "@/components/landing/primitives";
 import { StarField } from "@/components/landing/reactbits";
 import Footer from "@/components/landing/Footer";
@@ -30,7 +30,13 @@ import { whatsappHref } from "@/lib/whatsapp";
 /*  Header                                                             */
 /* ------------------------------------------------------------------ */
 
-export function CaseTopBar() {
+type BackLink = { href: string; label: string };
+
+/* páginas que não são case (ex.: /reconhecimento-facial) trocam o destino
+   do "voltar"; os cases seguem com a lista de cases */
+const CASES_BACK: BackLink = { href: "/#cases", label: "Todos os cases" };
+
+export function CaseTopBar({ back = CASES_BACK }: { back?: BackLink }) {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
@@ -70,8 +76,8 @@ export function CaseTopBar() {
                 a lista de cases é a segunda ação mais provável da página;
                 vira botão de ícone com 44px em vez de simplesmente sumir */}
             <Link
-              href="/#cases"
-              aria-label="Todos os cases"
+              href={back.href}
+              aria-label={back.label}
               className={`grid h-11 w-11 place-items-center rounded-xl transition-colors sm:hidden ${
                 scrolled
                   ? "text-slate-500 hover:bg-slate-900/5"
@@ -81,7 +87,7 @@ export function CaseTopBar() {
               <ArrowLeft className="h-5 w-5" />
             </Link>
             <Link
-              href="/#cases"
+              href={back.href}
               className={`hidden items-center gap-1.5 rounded-lg px-3 py-2 text-[13.5px] font-medium transition-colors sm:inline-flex ${
                 scrolled
                   ? "text-slate-500 hover:text-brand-950"
@@ -89,7 +95,7 @@ export function CaseTopBar() {
               }`}
             >
               <ArrowLeft className="h-3.5 w-3.5" />
-              Todos os cases
+              {back.label}
             </Link>
           </div>
         </div>
@@ -121,20 +127,48 @@ export function CaseHero({
   accent = "#93C5FD",
   meta = [],
   image,
+  actions,
   siteUrl,
+  align = "left",
+  scrollHint,
 }: {
-  logo: ReactNode;
+  /** marca do cliente acima do título; opcional na abertura centralizada */
+  logo?: ReactNode;
   title: string;
   intro: string;
   /** cor de assinatura do cliente: tinge aurora, fio editorial e horizonte */
   accent?: string;
   meta?: string[];
   image?: { src: string; alt: string; width: number; height: number };
+  /** CTAs logo abaixo do parágrafo de abertura */
+  actions?: ReactNode;
   siteUrl?: string;
+  /** "center" monta a abertura só de texto, no eixo do painel (sem imagem) */
+  align?: "left" | "center";
+  /** âncora da seta de rolagem no pé da abertura centralizada */
+  scrollHint?: string;
 }) {
+  const hasMedia = Boolean(image);
+  const centered = align === "center" && !hasMedia;
+  const accentLine = (direction: "90deg" | "270deg") => (
+    <span
+      aria-hidden
+      className={`h-px ${centered ? "w-10 sm:w-16" : "min-w-[2rem] flex-1"}`}
+      style={{
+        background: `linear-gradient(${direction}, ${hexToRgba(accent, 0.45)}, transparent 72%)`,
+      }}
+    />
+  );
   return (
     <section className="relative bg-[#04070f] px-2 pt-2 sm:px-3 sm:pt-3">
-      <div className="relative overflow-hidden rounded-[1.75rem] border border-white/5 bg-[#070c19]">
+      {/* centralizada, a abertura ocupa a tela inteira, como a hero da
+          home: o conteúdo fica no meio do painel e a seta no pé convida a
+          descer */}
+      <div
+        className={`relative overflow-hidden rounded-[1.75rem] border border-white/5 bg-[#070c19] ${
+          centered ? "flex min-h-[calc(100svh-0.5rem)] flex-col sm:min-h-[calc(100svh-0.75rem)]" : ""
+        }`}
+      >
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 mix-blend-screen"
@@ -152,10 +186,12 @@ export function CaseHero({
         />
 
         <div
-          className={`relative z-10 mx-auto w-full max-w-8xl px-5 pt-28 sm:px-8 sm:pt-32 lg:pt-40 ${
-            image
-              ? "grid items-center gap-8 pb-8 sm:gap-10 sm:pb-10 lg:grid-cols-[minmax(0,44%)_minmax(0,56%)] lg:gap-10 lg:pb-4"
-              : "pb-16 sm:pb-24 lg:pb-32"
+          className={`relative z-10 mx-auto w-full max-w-8xl px-5 sm:px-8 ${
+            hasMedia
+              ? "grid items-center gap-8 pb-8 pt-28 sm:gap-10 sm:pb-10 sm:pt-32 lg:grid-cols-[minmax(0,44%)_minmax(0,56%)] lg:gap-10 lg:pb-4 lg:pt-40"
+              : centered
+                ? "flex flex-1 flex-col justify-center py-28 sm:py-32"
+                : "pb-16 pt-28 sm:pb-24 sm:pt-32 lg:pb-32 lg:pt-40"
           }`}
         >
           {/* no celular a imagem entra antes do texto: h1 + parágrafo + meta
@@ -164,9 +200,17 @@ export function CaseHero({
               só a visual (order), então H1 continua sendo o primeiro
               conteúdo real da página para leitor de tela e SEO. De 1024px
               para cima a ordem volta a ser a original (texto à esquerda). */}
-          <div className={image ? "order-2 lg:order-1" : undefined}>
+          <div
+            className={
+              hasMedia ? "order-2 lg:order-1" : centered ? "mx-auto max-w-5xl text-center" : undefined
+            }
+          >
+            {(logo || siteUrl) && (
             <Reveal>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+              <div
+                className={`flex flex-wrap items-center gap-x-5 gap-y-3 ${centered ? "justify-center" : ""}`}
+              >
+                {centered && accentLine("270deg")}
                 <div className="shrink-0">{logo}</div>
                 {siteUrl && (
                   <a
@@ -179,20 +223,25 @@ export function CaseHero({
                     <ArrowUpRight className="h-3 w-3 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 )}
-                <span
-                  aria-hidden
-                  className="h-px min-w-[2rem] flex-1"
-                  style={{
-                    background: `linear-gradient(90deg, ${hexToRgba(accent, 0.45)}, transparent 72%)`,
-                  }}
-                />
+                {accentLine("90deg")}
               </div>
             </Reveal>
+            )}
 
             {/* título em branco sólido: o shimmer varrendo a headline inteira
-               lia como efeito genérico e competia com a aurora do painel */}
+               lia como efeito genérico e competia com a aurora do painel.
+               Centralizado e sem imagem, a abertura é só um convite para a
+               leitura: título curto, largo e em no máximo duas linhas. */}
             <Reveal delay={0.08}>
-              <h1 className="mt-6 text-balance text-[clamp(1.9rem,3.6vw,3.1rem)] font-semibold leading-[1.08] tracking-tightest text-white sm:mt-8">
+              <h1
+                className={`text-balance font-semibold leading-[1.08] tracking-tightest text-white ${
+                  logo || siteUrl ? "mt-6 sm:mt-8" : ""
+                } ${
+                  centered
+                    ? "mx-auto text-[clamp(1.15rem,5.8vw,1.6rem)] sm:text-[clamp(2rem,4vw,3.4rem)]"
+                    : "text-[clamp(1.9rem,3.6vw,3.1rem)]"
+                }`}
+              >
                 {title}
               </h1>
             </Reveal>
@@ -200,10 +249,26 @@ export function CaseHero({
             <Reveal delay={0.16}>
               {/* 14px era o menor corpo de texto de toda a página de case,
                   justamente no parágrafo que explica o projeto */}
-              <p className="mt-5 max-w-2xl text-balance text-[15px] leading-relaxed text-white/70 sm:mt-6">
+              <p
+                className={`mt-5 max-w-2xl text-balance leading-relaxed text-white/70 sm:mt-6 ${
+                  centered ? "mx-auto text-[15px] sm:mt-7 sm:text-[18px]" : "text-[15px]"
+                }`}
+              >
                 {intro}
               </p>
             </Reveal>
+
+            {actions && (
+              <Reveal delay={0.2}>
+                <div
+                  className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center ${
+                    centered ? "mt-9 sm:mt-11 sm:justify-center" : "mt-7 sm:mt-9"
+                  }`}
+                >
+                  {actions}
+                </div>
+              </Reveal>
+            )}
 
             {meta.length > 0 && (
               <Reveal delay={0.24}>
@@ -262,6 +327,16 @@ export function CaseHero({
             }}
           />
         </div>
+
+        {centered && scrollHint && (
+          <a
+            href={scrollHint}
+            aria-label="Continuar lendo"
+            className="absolute bottom-6 left-1/2 z-10 grid h-11 w-11 -translate-x-1/2 place-items-center rounded-full border border-white/15 text-white/60 transition-colors duration-200 hover:border-white/30 hover:text-white sm:bottom-8"
+          >
+            <ChevronDown className="h-5 w-5 animate-floaty" style={{ animationDuration: "2.6s" }} />
+          </a>
+        )}
       </div>
     </section>
   );
@@ -282,16 +357,30 @@ export function CaseStatement({
   align?: "left" | "center";
   className?: string;
 }) {
+  const centered = align === "center";
   return (
-    <div className={`${align === "center" ? "mx-auto text-center" : ""} max-w-3xl ${className}`}>
+    /* centralizado, o enunciado usa a largura: título em até 64rem e com
+       piso menor no celular, para caber em duas linhas em vez de virar
+       uma coluna estreita de quatro */
+    <div className={`${centered ? "mx-auto max-w-5xl text-center" : "max-w-3xl"} ${className}`}>
       <Reveal>
-        <h2 className="text-balance text-[clamp(1.7rem,3.2vw,2.6rem)] font-semibold leading-[1.1] tracking-tightest text-brand-950">
+        <h2
+          className={`text-balance font-semibold leading-[1.1] tracking-tightest text-brand-950 ${
+            centered ? "text-[clamp(1.45rem,3.2vw,2.6rem)]" : "text-[clamp(1.7rem,3.2vw,2.6rem)]"
+          }`}
+        >
           {title}
         </h2>
       </Reveal>
       {children && (
         <Reveal delay={0.08}>
-          <div className="mt-5 max-w-[64ch] space-y-4 text-[15px] leading-relaxed text-slate-600 sm:mt-6 sm:space-y-5 sm:text-[17px]">
+          {/* centralizado, o bloco de texto também precisa do mx-auto: sem
+              ele, os 64ch ficavam encostados à esquerda dentro dos 48rem */}
+          <div
+            className={`mt-5 max-w-[64ch] space-y-4 text-[15px] leading-relaxed text-slate-600 sm:mt-6 sm:space-y-5 sm:text-[17px] ${
+              align === "center" ? "mx-auto" : ""
+            }`}
+          >
             {children}
           </div>
         </Reveal>
@@ -349,6 +438,15 @@ function MetricValue({ value }: { value: string }) {
 
 /* ------------------------------------------------------------------ */
 /*  Família 3 — comparativo antes e depois                             */
+/*                                                                     */
+/*  Duas colunas que se leem linha a linha: no desktop os dois cartões */
+/*  são subgrids da mesma grade, então o item 2 da esquerda fica na    */
+/*  mesma altura do item 2 da direita, mesmo quando um texto quebra    */
+/*  em duas linhas e o outro não. A versão anterior tinha um traço     */
+/*  antes de cada item que não assentava na linha do texto, e o rótulo */
+/*  do cartão escuro era azul-claro sobre navy — ambos saíram. Agora   */
+/*  o cabeçalho é um título de verdade com um selo (✕ / ✓), e os itens */
+/*  são só texto, em corpo de leitura.                                 */
 /* ------------------------------------------------------------------ */
 
 export function CaseCompare({
@@ -362,63 +460,70 @@ export function CaseCompare({
   before: string[];
   afterLabel: string;
   after: string[];
+  /** tinge só a luz do cartão escuro, nunca texto */
   accent?: string;
 }) {
+  const rows = Math.max(before.length, after.length) + 1;
+
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
+    <div
+      className="grid gap-5 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-0 lg:[grid-template-rows:repeat(var(--compare-rows),auto)]"
+      style={{ ["--compare-rows" as string]: rows }}
+    >
       <motion.div
-        className="flex flex-col rounded-3xl border border-slate-200 bg-canvas p-6 sm:p-9"
-        initial={{ opacity: 0, x: -20, filter: "blur(8px)" }}
-        whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+        className="flex flex-col rounded-3xl border border-slate-200 bg-white p-7 shadow-fl-xs sm:p-10 lg:row-span-full lg:grid lg:grid-rows-subgrid"
+        initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-10% 0px" }}
         transition={{ duration: 0.85, ease: EASE }}
       >
-        {/* slate-500 e não slate-400: o rótulo precisa ser lido sobre o canvas */}
-        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-          {beforeLabel}
-        </span>
-        <ul className="mt-7 space-y-4">
-          {before.map((item) => (
-            <li key={item} className="flex items-start gap-3.5">
-              <span aria-hidden className="mt-2 h-px w-4 shrink-0 bg-slate-300" />
-              <span className="text-[15px] leading-relaxed text-slate-500">{item}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="flex items-center gap-3.5 pb-5 sm:pb-7">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-500">
+            <X className="h-[18px] w-[18px]" strokeWidth={2} />
+          </span>
+          <h3 className="text-[17px] font-semibold tracking-tight text-slate-700 sm:text-lg">
+            {beforeLabel}
+          </h3>
+        </div>
+        {before.map((item) => (
+          <p key={item} className="py-3 text-[15px] leading-relaxed text-slate-500 sm:py-3.5 sm:text-base">
+            {item}
+          </p>
+        ))}
       </motion.div>
 
       <motion.div
-        className="flex flex-col rounded-3xl bg-flauzino-navy-900 p-6 shadow-fl-lg sm:p-9"
-        initial={{ opacity: 0, x: 20, filter: "blur(8px)" }}
-        whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+        className="relative flex flex-col overflow-hidden rounded-3xl bg-flauzino-navy-900 p-7 shadow-fl-xl sm:p-10 lg:row-span-full lg:grid lg:grid-rows-subgrid"
+        initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-10% 0px" }}
         transition={{ duration: 0.85, ease: EASE, delay: 0.1 }}
       >
-        <span
-          className="text-[11px] font-semibold uppercase tracking-[0.2em]"
-          style={{ color: accent }}
-        >
-          {afterLabel}
-        </span>
-        <ul className="mt-7 space-y-4">
-          {after.map((item, i) => (
-            <motion.li
-              key={item}
-              className="flex items-start gap-3.5"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10% 0px" }}
-              transition={{ duration: 0.6, ease: EASE, delay: 0.25 + i * 0.08 }}
-            >
-              <span
-                aria-hidden
-                className="mt-2 h-px w-4 shrink-0"
-                style={{ background: accent }}
-              />
-              <span className="text-[15px] leading-relaxed text-white/85">{item}</span>
-            </motion.li>
-          ))}
-        </ul>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `radial-gradient(55% 70% at 100% 0%, ${hexToRgba(accent, 0.16)}, transparent 70%)`,
+          }}
+        />
+        <div className="relative flex items-center gap-3.5 pb-5 sm:pb-7">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-flauzino-navy-900">
+            <Check className="h-[18px] w-[18px]" strokeWidth={2.25} />
+          </span>
+          <h3 className="text-[17px] font-semibold tracking-tight text-white sm:text-lg">{afterLabel}</h3>
+        </div>
+        {after.map((item, i) => (
+          <motion.p
+            key={item}
+            className="relative py-3 text-[15px] font-medium leading-relaxed text-white/90 sm:py-3.5 sm:text-base"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.25 + i * 0.08 }}
+          >
+            {item}
+          </motion.p>
+        ))}
       </motion.div>
     </div>
   );
@@ -566,13 +671,17 @@ export function CaseCards({
       componente em si quebra a fronteira server/client do RSC. */
   items: { icon: ReactNode; title: string; body: string }[];
   accent?: string;
-  /** duas colunas para pares, três para conjuntos maiores */
-  columns?: 2 | 3;
+  /** duas colunas para pares, três para conjuntos maiores, quatro para uma faixa só */
+  columns?: 2 | 3 | 4;
 }) {
   return (
     <div
       className={`grid gap-4 sm:gap-5 ${
-        columns === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"
+        columns === 2
+          ? "sm:grid-cols-2"
+          : columns === 4
+            ? "sm:grid-cols-2 lg:grid-cols-4"
+            : "sm:grid-cols-2 lg:grid-cols-3"
       }`}
     >
       {items.map((item, i) => (
@@ -602,6 +711,75 @@ export function CaseCards({
 }
 
 /* ------------------------------------------------------------------ */
+/*  Família 8 — convite para um case                                   */
+/*                                                                     */
+/*  Um cartão inteiro clicável que leva a um estudo de caso: marca,    */
+/*  uma frase de resultado e a imagem real do produto. Serve para      */
+/*  páginas que falam de uma capacidade (ex.: /reconhecimento-facial)  */
+/*  apontarem para a prova, sem repetir o case dentro delas.           */
+/* ------------------------------------------------------------------ */
+
+export function CaseLinkCard({
+  href,
+  logo,
+  label,
+  title,
+  cta,
+  image,
+}: {
+  href: string;
+  logo: ReactNode;
+  /** rótulo pequeno acima do título (ex.: "Case de sucesso") */
+  label: string;
+  title: string;
+  cta: string;
+  image: { src: string; alt: string; width: number; height: number };
+}) {
+  return (
+    <Reveal>
+      <Link
+        href={href}
+        className="group relative grid overflow-hidden rounded-3xl bg-flauzino-navy-900 shadow-fl-lg transition-shadow duration-300 hover:shadow-fl-xl focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-500/40 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center"
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(50% 80% at 85% 50%, rgba(37,99,235,0.28), transparent 70%)",
+          }}
+        />
+        <div className="relative px-6 py-9 sm:px-10 sm:py-12 lg:py-14 lg:pl-14 lg:pr-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            {logo}
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
+              {label}
+            </span>
+          </div>
+          <h3 className="mt-6 max-w-md text-balance text-[clamp(1.1rem,5.6vw,1.35rem)] font-semibold leading-[1.2] tracking-tight text-white sm:text-[clamp(1.35rem,2.2vw,1.75rem)]">
+            {title}
+          </h3>
+          <span className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-[15px] font-semibold text-[#0b1220] transition-colors duration-200 group-hover:bg-blue-50">
+            {cta}
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </span>
+        </div>
+        <div className="relative px-6 pb-8 sm:px-10 lg:py-10 lg:pl-0 lg:pr-10">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            sizes="(min-width: 1024px) 700px, 92vw"
+            className="relative h-auto w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+          />
+        </div>
+      </Link>
+    </Reveal>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Seção: casca com respiro consistente                               */
 /* ------------------------------------------------------------------ */
 
@@ -609,14 +787,18 @@ export function CaseSection({
   children,
   tone = "white",
   className = "",
+  id,
 }: {
   children: ReactNode;
   tone?: "white" | "canvas";
   className?: string;
+  /** âncora da seção; o scroll-mt desconta a barra fixa do topo */
+  id?: string;
 }) {
   return (
     <section
-      className={`border-t border-slate-200/70 py-16 sm:py-20 lg:py-28 ${
+      id={id}
+      className={`scroll-mt-20 border-t border-slate-200/70 py-16 sm:py-20 lg:py-28 ${
         tone === "canvas" ? "bg-canvas" : "bg-white"
       } ${className}`}
     >
@@ -735,10 +917,13 @@ export function CaseCta({
   title = "Quer um resultado assim no seu negócio?",
   desc = "Conte o seu desafio para a nossa equipe. Projetamos a solução sob medida, do primeiro diagnóstico à operação em produção.",
   whatsappMessage = "Olá! Vi um case no site da Flauzino e quero um resultado assim no meu negócio. Podemos conversar?",
+  secondary = { ...CASES_BACK, direction: "back" },
 }: {
   title?: string;
   desc?: string;
   whatsappMessage?: string;
+  /** segundo botão; nos cases, a volta para a lista. null tira o botão */
+  secondary?: (BackLink & { direction: "back" | "forward" }) | null;
 }) {
   return (
     <section className="bg-canvas px-5 pb-16 pt-0 sm:px-8 sm:pb-20 lg:pb-28">
@@ -770,13 +955,16 @@ export function CaseCta({
                 Falar com especialista
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </a>
-              <Link
-                href="/#cases"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-7 py-3.5 text-[15px] font-semibold text-white/80 transition-colors hover:bg-white/10 hover:text-white max-sm:h-14 max-sm:w-full max-sm:justify-center max-sm:py-0"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Todos os cases
-              </Link>
+              {secondary && (
+                <Link
+                  href={secondary.href}
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-7 py-3.5 text-[15px] font-semibold text-white/80 transition-colors hover:bg-white/10 hover:text-white max-sm:h-14 max-sm:w-full max-sm:justify-center max-sm:py-0"
+                >
+                  {secondary.direction === "back" && <ArrowLeft className="h-4 w-4" />}
+                  {secondary.label}
+                  {secondary.direction === "forward" && <ArrowRight className="h-4 w-4" />}
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -785,10 +973,10 @@ export function CaseCta({
   );
 }
 
-export function CaseShell({ children }: { children: ReactNode }) {
+export function CaseShell({ children, back }: { children: ReactNode; back?: BackLink }) {
   return (
     <main className="relative overflow-x-clip bg-white">
-      <CaseTopBar />
+      <CaseTopBar back={back} />
       {children}
       <Footer />
     </main>

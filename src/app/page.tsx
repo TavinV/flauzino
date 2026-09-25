@@ -2,6 +2,7 @@ import Nav from "@/components/landing/Nav";
 import PageLoader from "@/components/landing/PageLoader";
 import Hero from "@/components/landing/Hero";
 import WhoWeAre from "@/components/landing/WhoWeAre";
+import FacialRecognition from "@/components/landing/FacialRecognition";
 import WhyFlauzino from "@/components/landing/WhyFlauzino";
 import ArtificialIntelligence from "@/components/landing/ArtificialIntelligence";
 import TechLogoLoop from "@/components/landing/TechLogoLoop";
@@ -67,6 +68,7 @@ export default function Home() {
       {/* ato I */}
       <Hero />
       <WhoWeAre />
+      <FacialRecognition />
       <WhyFlauzino />
       <ArtificialIntelligence />
 
