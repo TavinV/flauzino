@@ -346,7 +346,7 @@ const QUESTIONS: FAQEntry[] = [
 ];
 
 /* Service + WebPage + BreadcrumbList. A Organization repete só o que o
-   JSON-LD da home já publica (nome, URL, e-mail, logo), para esta página
+   JSON-LD da home já publica (nome, URL, logo), para esta página
    se explicar sozinha a quem a ler sem passar pela home. O FAQPage vem
    do componente FAQ, a partir das perguntas visíveis. */
 const JSON_LD = {
@@ -357,7 +357,6 @@ const JSON_LD = {
       "@id": `${SITE_URL}/#organization`,
       name: "Flauzino",
       url: SITE_URL,
-      email: "contato@flauzino.com.br",
       logo: `${SITE_URL}/apple-icon.png`,
     },
     {

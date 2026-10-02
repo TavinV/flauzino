@@ -15,9 +15,9 @@ import Footer from "@/components/landing/Footer";
 import { SITE_URL } from "@/lib/site";
 
 /* Organization + WebSite, só com o que é verdade e público no site: nome,
-   URL, e-mail e descrição. Sem endereço, telefone, review ou rede social
-   — nenhum desses existe publicado na landing, então nada disso entra
-   aqui. O FAQPage vive em FAQ.tsx, ao lado das próprias perguntas, para
+   URL e descrição. Sem e-mail, endereço, telefone, review ou rede social
+   — nenhum desses existe publicado na landing (o contato é só por
+   WhatsApp), então nada disso entra aqui. O FAQPage vive em FAQ.tsx, ao lado das próprias perguntas, para
    nunca divergir do que está visível na página. */
 const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
@@ -27,7 +27,6 @@ const ORGANIZATION_JSON_LD = {
       "@id": `${SITE_URL}/#organization`,
       name: "Flauzino",
       url: SITE_URL,
-      email: "contato@flauzino.com.br",
       logo: `${SITE_URL}/apple-icon.png`,
       description:
         "Software house brasileira especializada em sistemas sob medida, inteligência artificial, reconhecimento facial, automação e plataformas SaaS.",

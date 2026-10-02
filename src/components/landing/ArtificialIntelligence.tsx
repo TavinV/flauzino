@@ -134,7 +134,7 @@ export default function ArtificialIntelligence() {
          cima e embaixo do texto, e o shader mais caro da página rodava
          sobre 40% a mais de pixels. Aqui o painel vale uma tela (svh, sem
          o pulo da barra do Safari) e cresce com o conteúdo se precisar. */
-      className="relative isolate flex min-h-[100svh] scroll-mt-24 items-center overflow-hidden bg-[#04070f] py-24 sm:min-h-[140dvh] sm:py-24"
+      className="relative isolate flex min-h-[100svh] scroll-mt-24 items-center overflow-hidden bg-[#04070f] pb-36 pt-28 sm:min-h-[140dvh] sm:py-24"
     >
       {/* o y e o scale continuam presos ao scroll, então o prisma não
           "acende": ele sobe e assenta enquanto a seção entra */}
@@ -186,7 +186,10 @@ export default function ArtificialIntelligence() {
         className="relative mx-auto w-full max-w-6xl px-5 text-center lg:px-8"
         style={reduced ? undefined : { y: contentY }}
       >
-        <h2 className="mx-auto max-w-4xl text-balance text-[clamp(1.9rem,3.4vw,3.05rem)] font-semibold leading-[1.12] tracking-tightest">
+        {/* no celular o tamanho acompanha a largura (7vw): com o piso fixo
+            de 1,9rem a frase quebrava em cinco linhas em 390px; assim
+            fecha em três */}
+        <h2 className="mx-auto max-w-4xl text-balance text-[clamp(1.9rem,3.4vw,3.05rem)] font-semibold leading-[1.12] tracking-tightest max-sm:text-[clamp(1.375rem,7vw,1.9rem)]">
           {HEADLINE.map((w, i) => (
             <MaskWord key={`${w.word}-${i}`} word={w.word} index={i} tone={w.tone} />
           ))}
@@ -223,12 +226,12 @@ export default function ArtificialIntelligence() {
         </motion.div>
 
         {/* capacidades: quatro colunas centradas, com folga acima e abaixo.
-            No celular a coluna centrada virava quatro blocos altos e
-            iguais, cada um com o ícone sozinho numa linha; aqui cada
-            capacidade vira uma linha de leitura — ícone à esquerda,
-            título e frase à direita — na metade da altura. A troca é
-            só de grid para flex: a ordem dos nós no DOM não muda. */}
-        <div className="mt-14 grid gap-x-8 gap-y-7 sm:mt-16 sm:grid-cols-2 sm:gap-y-11 lg:mt-20 lg:grid-cols-4">
+            No celular elas viram uma grade 2×2 de cartões escuros. A
+            lista de quatro linhas empilhadas dobrava a altura da seção e
+            deixava o texto solto em cima da parte mais clara do prisma,
+            onde ele não se lia; o cartão dá fundo próprio para a frase e
+            a grade fecha as quatro numa tela só. */}
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-x-8 sm:gap-y-11 lg:mt-20 lg:grid-cols-4">
           {CAPABILITIES.map((c, i) => {
             const Icon = c.icon;
             return (
@@ -237,14 +240,14 @@ export default function ArtificialIntelligence() {
                 /* as classes de desktop continuam sendo a base; o layout de
                    celular entra por max-sm para não deixar nenhuma
                    declaração sobrando no computed style de 640px acima */
-                className="flex flex-col items-center max-sm:grid max-sm:grid-cols-[auto_minmax(0,1fr)] max-sm:items-start max-sm:gap-x-4 max-sm:text-left"
+                className="flex flex-col items-center max-sm:items-start max-sm:rounded-2xl max-sm:border max-sm:border-white/10 max-sm:bg-[#060b18]/65 max-sm:p-4 max-sm:text-left"
                 initial={{ opacity: 0, y: 26, filter: "blur(9px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-10% 0px" }}
                 transition={{ duration: 0.8, ease: EASE, delay: 0.1 + i * 0.09 }}
               >
                 <motion.span
-                  className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-white/[0.07] text-brand-200 backdrop-blur-sm max-sm:row-span-2 max-sm:h-11 max-sm:w-11"
+                  className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-white/[0.07] text-brand-200 backdrop-blur-sm max-sm:h-10 max-sm:w-10 max-sm:rounded-xl"
                   initial={{ scale: 0.5, rotate: -20, opacity: 0 }}
                   whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
                   viewport={{ once: true, margin: "-10% 0px" }}
@@ -257,10 +260,10 @@ export default function ArtificialIntelligence() {
                 >
                   <Icon className="h-5 w-5" strokeWidth={1.75} />
                 </motion.span>
-                <h3 className="mt-4 text-[15px] font-semibold tracking-tight text-white max-sm:mt-0 max-sm:text-[16px]">
+                <h3 className="mt-4 text-[15px] font-semibold tracking-tight text-white max-sm:mt-3.5 max-sm:text-[14px] max-sm:leading-snug">
                   {c.title}
                 </h3>
-                <p className="mt-2 max-w-[15rem] text-sm leading-relaxed text-white/65 max-sm:mt-1.5 max-sm:max-w-none max-sm:text-[15px]">
+                <p className="mt-2 max-w-[15rem] text-sm leading-relaxed text-white/65 max-sm:mt-1.5 max-sm:max-w-none max-sm:text-[13px] max-sm:leading-[1.5]">
                   {c.body}
                 </p>
               </motion.div>

@@ -8,7 +8,7 @@ import {
   useScroll,
   useSpring,
 } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Mail, Menu, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
 import MobileCtaBar from "./MobileCtaBar";
 import { EASE, Wordmark } from "./primitives";
 import { whatsappHref } from "@/lib/whatsapp";
@@ -340,13 +340,6 @@ export default function Nav() {
                 >
                   {CTA_LABEL}
                   <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="mailto:contato@flauzino.com.br"
-                  className="mt-2 flex h-12 items-center justify-center gap-2 rounded-xl text-sm font-medium text-white/50 transition-colors hover:text-white/80"
-                >
-                  <Mail className="h-4 w-4" />
-                  contato@flauzino.com.br
                 </a>
               </div>
             </motion.aside>

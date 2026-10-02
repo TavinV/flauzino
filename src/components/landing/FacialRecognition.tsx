@@ -451,15 +451,19 @@ export default function FacialRecognition() {
 
           {/* a foto surge depois do título, na frente dele: no desktop
               termina rente à base do palco; no celular desce um pouco além
-              dele e some no degradê */}
-          <div className="absolute left-[-47.4359%] top-[39.6429%] w-[194.8718%] lg:left-[8.3333%] lg:top-[28.9583%] lg:w-[83.3333%]">
+              dele e some no degradê. A foto atual é 1500×1035, com o rosto
+              ocupando bem mais do quadro que a anterior (2072×1177): por
+              isso a largura caiu de 195% para 150% no celular e de 83% para
+              67% no desktop. Com a largura antiga o cabelo cobria o
+              "Facial" inteiro e o queixo ia parar atrás dos chips. */}
+          <div className="absolute left-[-20%] top-[40.5%] w-[150%] lg:left-[18.8%] lg:top-[30.9%] lg:w-[66.7%]">
             <motion.div {...enter({ opacity: 0, filter: "blur(6px)" }, T.photo, { duration: 0.45, ease: "easeOut" })}>
               <Image
                 src="/facial_recognition/otavio.png"
-                alt="Otávio Vinícius, da Flauzino, com o rosto enquadrado por uma moldura de reconhecimento facial"
-                width={2072}
-                height={1177}
-                sizes="(min-width: 1024px) min(84vw, 1200px), min(195vw, 858px)"
+                alt="Otávio Vinícius, fundador da Flauzino, com o rosto enquadrado por uma moldura de reconhecimento facial"
+                width={1500}
+                height={1035}
+                sizes="(min-width: 1024px) min(67vw, 961px), min(150vw, 660px)"
                 className="block h-auto w-full select-none"
                 draggable={false}
               />

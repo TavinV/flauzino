@@ -132,12 +132,13 @@ export default function Hero() {
             {/* texto — centralizado no mobile, alinhado à esquerda no desktop */}
             <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
               <Reveal delay={0.05}>
-                {/* o piso do clamp subiu de 1,55rem para 1,95rem: em 375px
-                    o título da hero saía a 24,8px, menor que TODOS os h2 da
-                    página (32px), e a hierarquia lia ao contrário. O piso só
-                    manda abaixo de 780px, então de 1024px para cima quem
-                    decide continua sendo o 4vw — desktop intocado. */}
-                <h1 className="text-balance text-[clamp(2.1rem,4vw,3.4rem)] font-semibold leading-[1.14] tracking-tightest text-white sm:leading-[1.12]">
+                {/* no celular o tamanho acompanha a largura (7vw): com o piso
+                    fixo de 2,1rem "Reconhecimento facial," não cabia numa
+                    linha e o título quebrava em cinco. Em 7vw a frase azul
+                    fecha em uma linha de 320 a 640px e o título inteiro em
+                    três. De 640px para cima nada muda: quem decide continua
+                    sendo o clamp de 4vw. */}
+                <h1 className="text-balance text-[clamp(2.1rem,4vw,3.4rem)] font-semibold leading-[1.14] tracking-tightest text-white max-sm:text-[clamp(1.375rem,7vw,2.1rem)] sm:leading-[1.12]">
                   {/* base em brand-300 para separar do branco da segunda
                       linha; o brilho passa a cada ~4s (2s de varredura +
                       2s de descanso) em vez de um degradê sempre em
@@ -155,7 +156,7 @@ export default function Hero() {
               </Reveal>
 
               <Reveal delay={0.1}>
-                <p className="mx-auto mt-5 max-w-xl text-balance text-[15px] leading-relaxed text-white/70 sm:mt-6 sm:text-[17px] lg:mx-0">
+                <p className="mx-auto mt-4 max-w-xl text-balance text-[14px] leading-relaxed text-white/70 sm:mt-6 sm:text-[17px] lg:mx-0">
                   Desenvolvemos soluções de reconhecimento facial, inteligência
                   artificial, sistemas sob medida, plataformas SaaS e qualquer
                   tecnologia para o seu negócio.
@@ -166,7 +167,7 @@ export default function Hero() {
                 {/* os dois CTAs dividem a mesma altura (h-13) e, no mobile,
                     empilham ocupando a largura toda — assim ficam com
                     exatamente a mesma caixa um do outro */}
-                <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start">
+                <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start">
                   <a
                     href={whatsappHref(
                       "Olá! Vi o site da Flauzino e tenho interesse em reconhecimento facial e soluções de inteligência artificial para minha empresa. Podemos conversar?",

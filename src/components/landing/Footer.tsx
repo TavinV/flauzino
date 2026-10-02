@@ -9,7 +9,9 @@ import { whatsappHref } from "@/lib/whatsapp";
 /*  âncoras da navegação para não quebrar links já publicados.         */
 /* ================================================================== */
 
-const COLS = [
+type FooterLink = { label: string; href: string; external?: boolean };
+
+const COLS: { title: string; links: FooterLink[] }[] = [
   {
     title: "O que fazemos",
     links: [
@@ -32,7 +34,11 @@ const COLS = [
     title: "Contato",
     links: [
       { label: "Quem somos", href: "/#quem-somos" },
-      { label: "contato@flauzino.com.br", href: "mailto:contato@flauzino.com.br" },
+      {
+        label: "Mande um WhatsApp para nós",
+        href: whatsappHref("Olá! Vim pelo site da Flauzino e gostaria de conversar."),
+        external: true,
+      },
       { label: "Privacidade e LGPD", href: "/#faq" },
     ],
   },
@@ -92,6 +98,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
+                      {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       /* 48px de altura no celular: com py-2.5 a linha
                          fechava em 40px, abaixo do mínimo confortável de
                          toque, e são treze links seguidos */

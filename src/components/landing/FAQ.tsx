@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { EASE, Reveal } from "./primitives";
+import { whatsappHref } from "@/lib/whatsapp";
 
 /* ================================================================== */
 /*  FAQ — as objeções que aparecem antes da primeira conversa. Título  */
@@ -113,12 +114,16 @@ function faqJsonLd(questions: FAQEntry[]) {
 
 const DEFAULT_INTRO = (
   <>
-    Ficou alguma dúvida de fora? Escreva para{" "}
+    Ficou alguma dúvida de fora?{" "}
     <a
-      href="mailto:contato@flauzino.com.br"
+      href={whatsappHref(
+        "Olá! Li as perguntas frequentes no site da Flauzino e fiquei com uma dúvida. Podem me ajudar?",
+      )}
+      target="_blank"
+      rel="noopener noreferrer"
       className="font-medium text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:decoration-brand-500"
     >
-      contato@flauzino.com.br
+      Mande um WhatsApp para nós
     </a>
     .
   </>

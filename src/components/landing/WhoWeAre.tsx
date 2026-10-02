@@ -178,6 +178,17 @@ function useDragToScroll() {
   return { railRef, dragging, onPointerDown, onPointerMove, onPointerUp: endDrag, onPointerCancel: endDrag };
 }
 
+/* O parágrafo de abertura, com hífens opcionais (­) nas palavras
+   longas. No celular o texto é justificado e, sem um ponto de quebra, uma
+   palavra comprida que não cabe na linha deixa buracos entre as outras.
+   O dicionário de hifenização do navegador nem sempre existe para pt-BR,
+   então os pontos vão marcados à mão. De 640px para cima hyphens: none
+   desliga todos, e o texto volta a ser lido sem nenhuma quebra. */
+const LEAD_STRONG =
+  "Somos a única empresa de software sob de­manda do Brasil especia­lizada em reconhe­cimento facial.";
+const LEAD_REST =
+  "Constru­ímos sis­te­mas sob me­dida, pro­du­tos digi­tais e solu­ções de IA que pre­ci­sam funcio­nar na opera­ção, não só na demons­tração.";
+
 export default function WhoWeAre() {
   const drag = useDragToScroll();
 
@@ -231,15 +242,14 @@ export default function WhoWeAre() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <p className="mx-auto mt-6 max-w-[50rem] text-balance text-[17px] leading-[1.65] text-slate-600 sm:mt-7 sm:text-[20px]">
+            {/* no celular o parágrafo é justificado: centralizado em 350px
+                ele saía com seis linhas de larguras diferentes e a borda
+                serrilhada dos dois lados. A última linha fica no centro,
+                no eixo do título. */}
+            <p className="mx-auto mt-6 max-w-[50rem] text-balance text-[17px] leading-[1.65] text-slate-600 max-sm:hyphens-auto max-sm:text-justify max-sm:text-[16px] max-sm:[text-align-last:center] max-sm:[text-wrap:wrap] sm:mt-7 sm:hyphens-none sm:text-[20px]">
               {/* a informação que diferencia a empresa abre o parágrafo e
                   carrega o peso; o resto explica o alcance */}
-              <strong className="font-semibold text-brand-950">
-                Somos a única empresa de software sob demanda do Brasil especializada 
-                em reconhecimento facial.
-              </strong>{" "}
-              Construímos sistemas sob medida, produtos digitais e soluções de IA
-              que precisam funcionar na operação, não só na demonstração.
+               {LEAD_REST}
             </p>
           </Reveal>
         </div>
